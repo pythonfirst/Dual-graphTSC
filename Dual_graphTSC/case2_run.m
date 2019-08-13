@@ -4,7 +4,7 @@ addpath(genpath('D:\matcode\Dual_graphTSC\GraphSC'));
 load('jaffe_fea2.mat');
 load('CK_fea.mat');
 
-k =256;%156;%128;                % number of basis vectors
+k =256;                % number of basis vectors
 mu =1e2;               % MMD regularization
 mu1=1e2;
 alpha =0.2;%;0.1;            % graph regularization
