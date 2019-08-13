@@ -6,7 +6,7 @@ load('CK_fea.mat');
 k =256;    % number of basis vectors
 mu =1e3;       % MMD regularization
 alpha=0.2;            % graph regularization
-beta=0.8;
+beta=0.8;  %1;
 lambda = 0.02;           % sparsity regularization
 nIters = 10;            % number of iterations per TSC
 n=1;
