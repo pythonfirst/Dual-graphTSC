@@ -6,7 +6,6 @@ load('CK_fea.mat');
 
 k =256;                % number of basis vectors
 mu =1e2;               % MMD regularization
-mu1=1e2;
 alpha =0.2;%;0.1;            % graph regularization
 beta=0.8;
 gama=0.1;                     % discriminative criterion
@@ -35,7 +34,7 @@ Xt=[Xlt;Xut];
      Xlt=Xt(1:r,:);
      Xu=Xt(r+1:end,:);
 Xl=[Xls;Xlt];
-mod= svmtrain(label, Xl,'-t 0 -c 100');
+mod= svmtrain(label, Xl,'-t 0 -c 64');
 [predict3, accuracy1, ~] = svmpredict(test_label,Xu, mod);
 
 
@@ -53,28 +52,19 @@ newXs = diag(sparse(1./sqrt(sum(newXs.^2,2))))*newXs;
 newXlt = newXt(1:r,:);   
 newXut =newXt(r+1:end,:); 
 newXl=[newXls;newXlt];
-    mod= svmtrain(label, newXl,'-t 0 -c 100 ');
+    mod= svmtrain(label, newXl,'-t 0 -c 64');
 [predict2, accuracy2,~] = svmpredict(test_label,newXut, mod);
 
 for i=1:n
-[B2,Ss1,St1,stat1] = DGTSC(newXls',newXlt',k,alpha,beta,lambda,mu1,nIters);
-train=[Ss1';St1'];
-W=constructW(newXut);
-[~ ,Sg,~] = GraphSC(newXut', W, k, 0, lambda, 1, B2); % SC: donot use the graph item of GraphSC 
-mod= svmtrain(label, train,'-t 0 -c 100');
- [predict0, accuracy0, ~] = svmpredict(test_label,Sg', mod);
-acc_dgtsc=[acc_dgtsc accuracy0(1)];
-
 [B,Sl,Su,stat] = DGDTSC(newXls',newXlt',label,k,alpha,beta,gama,oumiga,lambda,mu,nIters);
 train=[Sl';Su'];
 W=constructW(newXut);
-[~ ,S,~] = GraphSC(newXut', W, k, 0, lambda, 1, B);
-mod= svmtrain(label, train,'-t 0 -c 100');
+[~ ,S,~] = GraphSC(newXut', W, k, 0, lambda, 1, B);% SC: donot use the graph item of GraphSC
+mod= svmtrain(label, train,'-t 0 -c 64');
  [predict, accuracy, pre] = svmpredict(test_label,S', mod);
  acc_dgdtsc=[acc_dgdtsc accuracy(1)];
 end
 
 fprintf('>>svm=%0.4f \n\n',accuracy1(1));
 fprintf('>>PCA+svm=%0.4f \n\n',accuracy2(1));
-fprintf('>>DGTSC+svm=%0.4f \n\n',accuracy0(1));
 fprintf('>>DGDTSC+svm=%0.4f \n\n',accuracy(1)); 
