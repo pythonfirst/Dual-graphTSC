@@ -6,10 +6,11 @@ load('CK_fea.mat');
 k =256;    % number of basis vectors
 mu =1e3;       % MMD regularization
 alpha=0.2;            % graph regularization
-beta=1;  %0.8;
+beta=1;
 lambda = 0.02;           % sparsity regularization
 nIters = 10;            % number of iterations per TSC
 n=10;
+acc_dgtsc=[];
 fea1=jaffe_fea2;
 fea2=CK_fea;
 train_label= fea1(1:end,1);
