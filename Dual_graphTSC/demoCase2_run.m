@@ -6,13 +6,13 @@ load('CK_fea.mat');
 
 k =256;                % number of basis vectors
 mu =1e2;               % MMD regularization
-alpha =0.2;%;0.1;            % graph regularization
+alpha =0.1;%;0.2;            % graph regularization
 beta=0.8;
 gama=0.1;                     % discriminative criterion
 oumiga=0.55;
 lambda = 0.02;           % sparsity regularization
 nIters = 10;            % number of iterations or TSC
-n=1;
+n=1; %10;
 
 acc_dgtsc=[];
 acc_dgdtsc=[];
